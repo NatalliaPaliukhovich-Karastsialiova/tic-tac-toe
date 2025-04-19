@@ -83,6 +83,16 @@ button {
   border-radius: 10px;
   outline: 5px solid var(--border-color);
   overflow: hidden;
+  position: relative;
+}
+
+.win-line {
+  position: absolute;
+  height: 5px;
+  background: white;
+  transform-origin: left center;
+  transition: all 0.3s ease;
+  display: none;
 }
 
 .footer {
@@ -119,7 +129,7 @@ button {
   display: none;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.9);
 }
 
 .pop-up__wrapper-visible {
@@ -197,6 +207,10 @@ button {
   height: 30px;
 }
 
+#history thead tr th {
+  border-bottom: 1px solid white;
+}
+
 .settings__wrapper {
   position: absolute;
   inset: 0;
@@ -204,7 +218,7 @@ button {
   display: none;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.9);
 }
 
 .settings__pop-up {
@@ -218,6 +232,11 @@ button {
   color: white;
   font-size: 40px;
   background-color: var(--pop-up-bg-color);
+}
+
+.setting__desc {
+  font-size: 16px;
+  margin: 10px 0;
 }
 
 .cross {

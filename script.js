@@ -10,9 +10,11 @@ const settingsWrapper = document.querySelector(".settings__wrapper");
 const crossBtn = document.querySelector(".cross");
 const zeroBtn = document.querySelector(".zero");
 const turnText = document.querySelector(".turn-text");
+const winLine = document.querySelector('.win-line');
 
 let fieldData = [[9, 9, 9], [9, 9, 9], [9, 9, 9]];
 
+const cellSize = 100;
 let userFigure = 1;
 let computerFigure = 0;
 let rowsNumber = 0;
@@ -58,14 +60,16 @@ popUpWrapper.addEventListener("click", event => {
 popUpReplayBtn.addEventListener("click", event => {
   setInitialState();
   popUpWrapper.classList.toggle("pop-up__wrapper-visible");
-  addEvents();
+  if(userFigure === 1) addEvents();
+  else removeEvents();
   renderField();
   chooseSymbol();
 });
 
 mainReplayBtn.addEventListener("click", event => {
   setInitialState();
-  addEvents();
+  if(userFigure === 1) addEvents();
+  else removeEvents();
   renderField();
   chooseSymbol();
 });
@@ -218,19 +222,48 @@ function checkWinCombinations(figure) {
   const winCombo = `${figure}${figure}${figure}`;
   let flag = false;
   let array = [];
-  fieldData.forEach((row, rowIndex) => {
-    array.push(row.join(""));
-  });
-  for (let i = 0; i < columnsNumber; i++) {
-    let col = "";
-    for (let j = 0; j < rowsNumber; j++) {
-      col += fieldData[j][i];
-    }
-    array.push(col);
+  let res = {
+    isWin : false,
+    startRow : 0,
+    endRow : 0,
+    startColumn : 0,
+    endColumn : 0,
   }
+
+  fieldData.forEach((row, rowIndex) => {
+    const combo = row.join("");
+    if(combo === winCombo) {
+      res.startRow = rowIndex;
+      res.endRow = rowIndex;
+      res.startColumn = 0;
+      res.endColumn = columnsNumber - 1;
+    }
+    array.push(combo);
+  });
+
+  for (let i = 0; i < columnsNumber; i++) {
+    let combo = "";
+    for (let j = 0; j < rowsNumber; j++) {
+      combo += fieldData[j][i];
+    }
+    if(combo === winCombo) {
+      res.startRow = 0;
+      res.endRow = rowsNumber - 1;
+      res.startColumn = i;
+      res.endColumn = i;
+    }
+    array.push(combo);
+  }
+
   let col = "";
   for (let i = 0; i < columnsNumber; i++) {
     col += fieldData[i][i];
+  }
+  if(col === winCombo) {
+    res.startRow = 0;
+    res.endRow = rowsNumber - 1;
+    res.startColumn = 0;
+    res.endColumn = columnsNumber - 1;
   }
   array.push(col);
 
@@ -241,12 +274,40 @@ function checkWinCombinations(figure) {
       break;
     }
   }
+  if(col === winCombo) {
+    res.startRow = rowsNumber - 1;
+    res.endRow = 0;
+    res.startColumn = 0;
+    res.endColumn = columnsNumber - 1;
+  }
   array.push(col);
-
-  return array.includes(winCombo);
+  res.isWin = array.includes(winCombo);
+  return res;
 }
 
-function showResult(winner) {
+function showResult(winner, turns, winCoordinates) {
+  if(winner !== "draw") accentWinCombo(winCoordinates);
+  setTimeout(() => showResultPopUp(winner, turns),2000);
+}
+
+function accentWinCombo(winCoordinates) {
+  const x1 = winCoordinates.startColumn * cellSize  + cellSize / 2;
+  const y1 = winCoordinates.startRow * cellSize  + cellSize / 2;
+  const x2 = winCoordinates.endColumn * cellSize  + cellSize / 2;
+  const y2 = winCoordinates.endRow * cellSize  + cellSize / 2;
+
+  const length = Math.hypot(x2 - x1, y2 - y1);
+  const angle = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
+
+  winLine.style.width = `${length}px`;
+  winLine.style.left = `${x1}px`;
+  winLine.style.top = `${y1}px`;
+  winLine.style.transform = `rotate(${angle}deg)`;
+  winLine.style.display = 'block';
+  console.log(winCoordinates);
+}
+
+function showResultPopUp(winner, turns) {
   let text = "";
   let symbol = "";
   let link = "";
@@ -261,7 +322,7 @@ function showResult(winner) {
       symbol = `url(./assets/img/cross.svg)`;
       link = `./assets/img/cross.svg`;
     }
-  } else if (winner === "user") {
+  } else if (winner === "player") {
     if (userFigure === 0) {
       symbol = `url(./assets/img/zero.svg)`;
       link = `./assets/img/zero.svg`;
@@ -280,6 +341,7 @@ function showResult(winner) {
   popUpWrapper.classList.toggle("pop-up__wrapper-visible");
   saveGameResult(winner, link, turns);
   renderLeaderboard();
+  winLine.style.display = 'none';
 }
 
 function setFigure(event) {
@@ -292,17 +354,18 @@ function setFigure(event) {
   fieldData[currentRow][currentColumn] = userFigure;
   renderField();
   playSoundEffect();
-  if (!checkWinCombinations(userFigure)) {
+  let checkWinCombinationsRes = checkWinCombinations(userFigure);
+  if (!checkWinCombinationsRes.isWin) {
     if (isEmptyFieldsExists()) {
       setTurnText(computerFigure);
       setTimeout(computerSetFigure, 1000);
     } else {
       winner = "draw";
-      showResult(winner, turns);
+      showResult(winner, turns, checkWinCombinationsRes);
     }
   } else {
-    winner = "user";
-    showResult(winner, turns);
+    winner = "player";
+    showResult(winner, turns, checkWinCombinationsRes);
   }
 }
 
@@ -338,18 +401,19 @@ function computerSetFigure(event) {
   renderField();
   playSoundEffect();
   setTurnText(userFigure);
-  if (!checkWinCombinations(computerFigure)) {
+  let checkWinCombinationsRes = checkWinCombinations(computerFigure);
+  if (!checkWinCombinationsRes.isWin) {
     if (isEmptyFieldsExists()) {
       setTimeout(() => {
         addEvents();
       }, 300);
     } else {
       winner = "draw";
-      showResult(winner, turns);
+      showResult(winner, turns, checkWinCombinationsRes);
     }
   } else {
     winner = "computer";
-    showResult(winner, turns);
+    showResult(winner, turns, checkWinCombinationsRes);
   }
 }
 
