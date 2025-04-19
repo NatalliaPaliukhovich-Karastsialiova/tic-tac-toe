@@ -44,27 +44,27 @@ button {
 
 .main {
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
   flex-grow: 1;
-  background-color: var(--page-bg-color);
+  justify-content: center;
+  align-items: center;
   gap: 20px;
-  font-family: Montserrat, sans-serif;
   color: white;
+  font-family: Montserrat, sans-serif;
+  background-color: var(--page-bg-color);
 }
 
 .field {
-  width: 100px;
-  height: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100px;
+  height: 100px;
   border: 2px solid var(--border-color);
   background-color: var(--field-bg-color);
-  background-size: 80%;
-  background-position: center center;
   background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 80%;
   cursor: pointer;
 }
 
@@ -78,10 +78,10 @@ button {
 
 .container {
   display: flex;
-  width: 300px;
   flex-wrap: wrap;
-  outline: 5px solid var(--border-color);
+  width: 300px;
   border-radius: 10px;
+  outline: 5px solid var(--border-color);
   overflow: hidden;
 }
 
@@ -113,13 +113,13 @@ button {
 }
 
 .pop-up__wrapper {
-  display: none;
   position: absolute;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.5);
   z-index: 3;
+  display: none;
   justify-content: center;
   align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .pop-up__wrapper-visible {
@@ -127,40 +127,130 @@ button {
 }
 
 .pop-up {
-  width: 60%;
-  height: 50%;
-  background-color: var(--pop-up-bg-color);
-  border-radius: 20px;
-  color: white;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
   flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 60%;
+  border-radius: 20px;
   padding: 20px;
+  color: white;
+  background-color: var(--pop-up-bg-color);
 }
 
-.pop-up__replay {
-  text-transform: uppercase;
-  background-color: var(--btn-default-color);
-  border: 3px solid var(--btn-border-color);
-  color: inherit;
-  font-size: 20px;
-  font-weight: 700;
-  padding: 15px 40px;
-  border-radius: 30px;
-}
-
+.pop-up__replay,
 .main__replay {
+  margin-top: 30px;
+  border: 3px solid var(--btn-border-color);
+  border-radius: 30px;
+  padding: 15px 40px;
+  color: inherit;
+  font-weight: 700;
+  font-size: 20px;
   text-transform: uppercase;
   background-color: var(--btn-default-color);
-  border: 3px solid var(--btn-border-color);
-  color: inherit;
-  font-size: 20px;
-  font-weight: 700;
-  padding: 15px 40px;
-  border-radius: 30px;
 }
 
-.turn {
+.pop-up__replay:hover,
+.main__replay:hover {
+  background-color: var(--btn-border-color);
+}
+
+.pop-up__replay:active,
+.main__replay:active {
+  box-shadow: 0 0 15px var(--active-field-border-color);
+}
+
+.result__title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  margin-bottom: 20px;
+  font-size: 40px;
+}
+
+.result {
+  display: none;
+  width: 50px;
+  height: 50px;
+  background-color: var(--btn-border-color);
+  background-size: contain;
+}
+
+.turn-text {
   margin: 20px;
+}
+
+.history__title {
+  margin: 20px 0;
+}
+
+#history {
+  width: 100%;
+  text-align: center;
+}
+
+#history tbody img {
+  width: 30px;
+  height: 30px;
+}
+
+.settings__wrapper {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.settings__pop-up {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 50%;
+  border-radius: 20px;
+  padding: 50px;
+  color: white;
+  font-size: 40px;
+  background-color: var(--pop-up-bg-color);
+}
+
+.cross {
+  background-image: url(../assets/img/cross.svg);
+}
+
+.zero {
+  background-image: url(../assets/img/zero.svg);
+}
+
+.btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  margin-top: 50px;
+}
+
+.btn-container button {
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
+  background-color: transparent;
+}
+.btn-container button:hover,
+.btn-container button:active {
+  box-shadow: 0 0 15px var(--active-field-border-color);
+}
+
+.visible-block {
+  display: block;
+}
+
+.visible-flex {
+  display: flex;
 }

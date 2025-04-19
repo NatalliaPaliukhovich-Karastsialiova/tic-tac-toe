@@ -1,48 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tic Tac Toe</title>
-  <link rel="stylesheet" href="./styles/style.css">
-</head>
-<body class="page">
-  <main class="main">
-    <h1 class="title">TIC TAC TOE</h1>
-    <div class="container">
-      <div class="field" id="1"></div>
-      <div class="field" id="2"></div>
-      <div class="field" id="3"></div>
-      <div class="field" id="4"></div>
-      <div class="field" id="5"></div>
-      <div class="field" id="6"></div>
-      <div class="field" id="7"></div>
-      <div class="field" id="8"></div>
-      <div class="field" id="9"></div>
-    </div>
-    <h2 class="turn">Player X's Turn</h2>
-    <button class="main__replay">Play again</button>
-  </main>
-  <footer class="footer">
-    <div class="logo-wrapper">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="shortcut icon" href="./assets/img/favicon.png" type="image/x-icon">
+  </head>
+  <body class="page">
+    <main class="main">
+      <h1 class="title">TIC TAC TOE</h1>
+      <div class="container">
+        <div class="field" id="1"></div>
+        <div class="field" id="2"></div>
+        <div class="field" id="3"></div>
+        <div class="field" id="4"></div>
+        <div class="field" id="5"></div>
+        <div class="field" id="6"></div>
+        <div class="field" id="7"></div>
+        <div class="field" id="8"></div>
+        <div class="field" id="9"></div>
+      </div>
+      <h2 class="turn-text">Player X's Turn</h2>
+      <button class="main__replay">Play again</button>
+    </main>
+    <footer class="footer">
+      <div class="logo-wrapper">
         <a href="https://rs.school/courses/javascript-ru" target="_blank">
-            <img class="logo" src="./assets/img/rs-school-logo.svg" alt="RSS logo">
+          <img
+            class="logo"
+            src="./assets/img/rs-school-logo.svg"
+            alt="RSS logo"
+          >
         </a>
-        <a href="https://github.com/NatalliaPaliukhovich-Karastsialiova" target="_blank">
-          <img class="github" src="./assets/img/icons8-github-60.png" alt="GitHub Profile">
+        <a
+          href="https://github.com/NatalliaPaliukhovich-Karastsialiova"
+          target="_blank"
+        >
+          <img
+            class="github"
+            src="./assets/img/icons8-github-60.png"
+            alt="GitHub Profile"
+          >
         </a>
-    </div>
-    <div class="created-by">
-        <p> &copy; 2025, Natallia Paliukhovich-Karastsialiova</p>
-    </div>
-  </footer>
+      </div>
+      <div class="created-by">
+        <p>&copy; 2025, Natallia Paliukhovich-Karastsialiova</p>
+      </div>
+    </footer>
 
-  <div class="pop-up__wrapper">
-    <div class="pop-up">
-      <h2 class="result"> comp</h2>
-      <button class="pop-up__replay">Play again</button>
+    <div class="pop-up__wrapper">
+      <div class="pop-up">
+        <p class="result__title">
+          <span class="result"></span>
+          <span class="text"></span>
+        </p>
+        <h3>Moves number: <span class="turns"></span></h3>
+        <h3 class="history__title">Last 10 Games</h3>
+        <table id="history">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Winner</th>
+              <th>Symbol</th>
+              <th>Moves</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <button class="pop-up__replay">Play again</button>
+      </div>
     </div>
-  </div>
-  <script src="./script.js"></script>
-</body>
+
+    <div class="settings__wrapper">
+      <div class="settings__pop-up">
+        <h2 class="settings__title">Let's play!</h2>
+        <div class="btn-container">
+          <button class="cross" id="X"></button>
+          <button class="zero" id="0"></button>
+        </div>
+      </div>
+    </div>
+    <script src="./script.js"></script>
+  </body>
 </html>
